@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>Page Title</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+   
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Train Name</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Frequency</th>
+                <th scope="col">Next Arrival</th>
+                <th scope="col">Minutes Away</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td id="nameDis"></td>
+                <td id="desDis"></td>
+                <td id="freqDis"></td>
+                <td id="nextDis"></td>
+                <td id="minAwayDis"></td>
+                
+            </tr>
+        </tbody>
+    </table>
+
+          <div class="row" id="formRow">
+              <div class="col-sm-12" id="formCol">
+                  <div class="form-group">
+                      <label for="name-input">Name:</label>
+                        <input class="form-control" id="name-input" type="text">
+                  </div>
+                    <div class="form-group">
+                     <label for="destination-input">Destination</label>
+                        <input class="form-control" id="destination-input" type="place">
+                    </div>
+                   <div class="form-group">
+                        <label for="firstTrain-input">First Train Time (military)</label>
+                       <input class="form-control" id="firstTrain-input" type="number">
+                    </div>
+                    <div class="form-group">
+                       <label for="freq-input">Frequency</label>
+                      <input class="form-control" id="freq-input" type="number">
+                    </div>
+                  <button class="btn btn-primary" id="add-train" type="submit">Submit</button>
+                </div>
+          </div>
+          </div>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
