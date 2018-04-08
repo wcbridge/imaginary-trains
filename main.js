@@ -36,22 +36,29 @@ $("#add-train").on("click", function () {
 
 });
 
-database.ref().on("child_added", function (childSnapshot) {
-
+//database.ref().on("value", function (snapshot) {
+    database.ref().on("child_added", function (childSnapshot) {
     // Log everything that's coming out of snapshot
-    //console.log(snapshot.val());
-    console.log(snapshot.val().name);
-    console.log(snapshot.val().des);
-    console.log(snapshot.val().firstTime);
-    console.log(snapshot.val().freq);
-   // database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
-    // Change the HTML to reflect
-    $("#nameDis").text(snapshot.val().name);
-    $("#desDis").text(snapshot.val().des);
-    $("#freqDis").text(snapshot.val().freq);
+   // console.log(snapshot.val());
+    console.log(childSnapshot.val().name);
+    console.log(childSnapshot.val().des);
+    console.log(childSnapshot.val().firstTime);
+    console.log(childSnapshot.val().freq);
+
+        $("#nameDis").append("<div class='well'><span class='nameDis'> " + childSnapshot.val().name)
+        $("#desDis").append("<div class='well'><span class='desDis'> " + childSnapshot.val().des)
+        $("#freqDis").append("<div class='well'><span class='freq'> " + childSnapshot.val().freq)
+    }, function (errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+    });
+    //  database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+ 
+    // $("#nameDis").text(snapshot.val().name);
+    // $("#desDis").text(snapshot.val().des);
+    // $("#freqDis").text(snapshot.val().freq);
     // $("#comment-display").text(snapshot.val().comment);
-//    })
-    // // Handle the errors
-}, function (errorObject) {
-    console.log("Errors handled: " + errorObject.code);
-});
+
+// }, function (errorObject) {
+//     console.log("Errors handled: " + errorObject.code);
+// });
+  // })
