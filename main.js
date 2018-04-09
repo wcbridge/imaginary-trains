@@ -18,7 +18,7 @@ var now = moment().format('HH:mm');
 
 //console.log(moment(firstTime).add(freq,'m').format("hh:mm"));
 console.log(now);   
-console.log(firstTime);
+//console.log(firstTime);
 
 //moment().format('hh:mm');
 
@@ -32,7 +32,8 @@ $("#add-train").on("click", function () {
     firstTime = $("#firstTrain-input").val().trim();
     freq = $("#freq-input").val().trim();
    
-   var firstCon = moment(firstTime, 'HH:mm');
+   var firstCon = moment(firstTime, 'HH:mm').subtract(1, 'years');
+   console.log(firstCon);
     var diff = moment().diff(firstCon, 'm');
     var remain = diff % freq;
     var minLeft = freq - remain;
@@ -43,11 +44,11 @@ $("#add-train").on("click", function () {
     database.ref().push({
         name: name,
         des: des,
-        firstCon: firstCon,
-        diff : diff,
-        minLeft : minLeft,
-        freq: freq,
-        next: next
+        firstTime: firstTime,
+         diff : diff,
+         minLeft : minLeft,
+         freq: freq,
+         next: next
     });
 
 });
@@ -59,7 +60,7 @@ $("#add-train").on("click", function () {
    // console.log(snapshot.val());
     console.log(childSnapshot.val().name);
     console.log(childSnapshot.val().des);
-    console.log(childSnapshot.val().firstCon);
+    console.log(childSnapshot.val().firstTime);
     console.log(childSnapshot.val().freq);
     console.log(childSnapshot.val().next);
 
