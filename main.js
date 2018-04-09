@@ -12,11 +12,13 @@ var database = firebase.database();
 
 var name = "";
 var destination = "";
-var firstTime = 0;
+var firstTime ='';
 var freq = 0;
+var now = moment().format('HH:mm');
 
-console.log(moment(firstTime).add(freq,'m').format("hh:mm"));
-   
+//console.log(moment(firstTime).add(freq,'m').format("hh:mm"));
+console.log(now);   
+console.log(firstTime);
 
 //moment().format('hh:mm');
 
@@ -29,18 +31,23 @@ $("#add-train").on("click", function () {
     des = $("#destination-input").val().trim();
     firstTime = $("#firstTrain-input").val().trim();
     freq = $("#freq-input").val().trim();
-   // next=next;
-
-    console.log((firstTime +moment(15,'m')));
-   // console.log(moment(firstTime).add(moment(freq,'m'), "hh:mm"))
-   // console.log(moment(firstTime).add(freq, 'm').format("hh:mm"));
-//console.log(freq);
+   
+   var firstCon = moment(firstTime, 'HH:mm');
+    var diff = moment().diff(firstCon, 'm');
+    var remain = diff % freq;
+    var minLeft = freq - remain;
+   
+   var next = moment().add(minLeft,'m').format('hh:mm A');
+   
+   
     database.ref().push({
         name: name,
         des: des,
-        firstTime: firstTime,
+        firstCon: firstCon,
+        diff : diff,
+        minLeft : minLeft,
         freq: freq,
-      //  next: next
+        next: next
     });
 
 });
@@ -50,26 +57,17 @@ $("#add-train").on("click", function () {
     database.ref().on("child_added", function (childSnapshot) {
     // Log everything that's coming out of snapshot
    // console.log(snapshot.val());
-    // console.log(childSnapshot.val().name);
-    // console.log(childSnapshot.val().des);
-    // console.log(childSnapshot.val().firstTime);
-    // console.log(childSnapshot.val().freq);
-    // console.log(childSnapshot.val().next);
+    console.log(childSnapshot.val().name);
+    console.log(childSnapshot.val().des);
+    console.log(childSnapshot.val().firstCon);
+    console.log(childSnapshot.val().freq);
+    console.log(childSnapshot.val().next);
 
-        $("#nameDis").append("<div id='row'><span class='nameDis'> " + childSnapshot.val().name)
-        $("#desDis").append("<div id='row'><span class='desDis'> " + childSnapshot.val().des)
-        $("#freqDis").append("<div id='row'><span class='freq'> " + childSnapshot.val().freq)
+        $("#row").append("<div id='well'><span class='nameDis'> " + childSnapshot.val().name+
+        "</span><span class='desDis'> " + childSnapshot.val().des+
+        "</span><span class='freq'> " + childSnapshot.val().freq + " </span></div>")
+        
     }, function (errorObject) {
         console.log("Errors handled: " + errorObject.code);
     });
-//       database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
- 
-//     $("#nameDis").text(childSnapshot.val().name);
-//     $("#desDis").text(childSnapshot.val().des);
-//     $("#freqDis").text(childSnapshot.val().freq);
-//     $("#comment-display").text(childSnapshot.val().comment);
-
-// // }, function (errorObject) {
-// //     console.log("Errors handled: " + errorObject.code);
-// // });
-//    })
+    
