@@ -11,9 +11,6 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var now = moment().format('HH:mm');
 
-//console.log(moment(firstTime).add(freq,'m').format("hh:mm"));
-console.log(now);
-
 
 $("#add-train").on("click", function () {
     var name = $("#name-input").val().trim();
@@ -30,7 +27,6 @@ $("#add-train").on("click", function () {
         var diff = moment().diff(firstCon, 'm');
         var remain = diff % freq;
         var minLeft = freq - remain;
-        var next = moment().add(minLeft, 'm').format('hh:mm A');
         database.ref().push({
             name: name,
             des: des,
@@ -38,30 +34,18 @@ $("#add-train").on("click", function () {
             diff: diff,
             minLeft: minLeft,
             freq: freq,
-            next: next
         });
     }
-
-
-
-
 });
 
-
-//database.ref().on("value", function (snapshot) {
 database.ref().on("child_added", function (childSnapshot) {
-    // Log everything that's coming out of snapshot
-    // console.log(snapshot.val());
-    console.log(childSnapshot.val().name);
-    console.log(childSnapshot.val().des);
-    console.log(childSnapshot.val().firstTime);
-    console.log(childSnapshot.val().freq);
-    console.log(childSnapshot.val().next);
 
-    $("#nameDis").append("<div id='row'><span class='nameDis'> " + childSnapshot.val().name)
-        - $("#desDis").append("<div id='row'><span class='desDis'> " + childSnapshot.val().des)
-        - $("#freqDis").append("<div id='row'><span class='freq'> " + childSnapshot.val().freq)
-
+    var next = moment().add(childSnapshot.val().minLeft, 'm').format('hh:mm A');
+    $("#nameDis").append("<div id='row'>" + childSnapshot.val().name)
+    $("#desDis").append("<div id='row'>" + childSnapshot.val().des)
+    $("#freqDis").append("<div id='row'>" + childSnapshot.val().freq)
+    $("#nextDis").append("<div id='row'>" + next)
+    $("#minAwayDis").append("<div id='row'>" + childSnapshot.val().minLeft)
 }, function (errorObject) {
     console.log("Errors handled: " + errorObject.code);
 });
