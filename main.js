@@ -58,9 +58,9 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val().freq);
     console.log(childSnapshot.val().next);
 
-    $("#row").append("<div id='well'><span class='nameDis'> " + childSnapshot.val().name +
-        "</span><span id='desDis'> " + childSnapshot.val().des +
-        "</span><span class='freq'> " + childSnapshot.val().freq + " </span></div>")
+    $("#nameDis").append("<div id='row'><span class='nameDis'> " + childSnapshot.val().name)
+        - $("#desDis").append("<div id='row'><span class='desDis'> " + childSnapshot.val().des)
+        - $("#freqDis").append("<div id='row'><span class='freq'> " + childSnapshot.val().freq)
 
 }, function (errorObject) {
     console.log("Errors handled: " + errorObject.code);
